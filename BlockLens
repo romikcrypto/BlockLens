@@ -1,0 +1,24 @@
+# scripts/data_collection.py
+
+import requests
+import pandas as pd
+
+def fetch_blockchain_data(api_url, endpoint, params):
+    """
+    Fetch data from a blockchain network.
+    
+    :param api_url: Base URL of the blockchain API
+    :param endpoint: API endpoint for the specific data
+    :param params: Dictionary of parameters for the API call
+    :return: DataFrame with blockchain data
+    """
+    response = requests.get(f'{api_url}/{endpoint}', params=params)
+    response.raise_for_status()
+    data = response.json()
+    df = pd.DataFrame(data)
+    return df
+
+# Example usage:
+# params = {'start': '2021-01-01', 'end': '2021-12-31'}
+# blockchain_data = fetch_blockchain_data('https://api.blockchain.info', 'blocks', params)
+# print(blockchain_data)
